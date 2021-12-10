@@ -269,6 +269,12 @@ PLATFORMS
 
 DEPENDENCIES
   github-pages
+  jekyll-feed
+  jekyll-gist
+  jekyll-paginate
+  jekyll-redirect-from
+  jekyll-sitemap
+  jemoji
   tzinfo-data
 
 BUNDLED WITH

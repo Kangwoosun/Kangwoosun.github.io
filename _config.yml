@@ -16,7 +16,7 @@
 
 # theme: jekyll-theme-so-simple
 remote_theme: "mmistakes/so-simple-theme@3.2.0"
-skin: "/assets/css/skins/default.css"
+skin: "/assets/css/skins/dark.css"
 locale: en-US
 title: "Woosun's notepad"
 description: "A simple Jekyll theme for words and pictures."

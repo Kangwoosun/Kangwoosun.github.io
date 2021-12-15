@@ -22,7 +22,7 @@ title: "Woosun's notepad"
 description: "A simple Jekyll theme for words and pictures."
 baseurl:
 url: "https://kangwoosun.github.io"
-logo: "/images/so-simple-site-logo.png"
+logo: "https://avatars.githubusercontent.com/u/29699207?v=4"
 date_format: "%B %-d, %Y"
 read_time: true
 words_per_minute: # 200
@@ -110,7 +110,7 @@ defaults:
 # Site Author
 author:
   name: Kangwoosun
-  picture: /images/michael-rose-photo.jpg
+  picture: https://avatars.githubusercontent.com/u/29699207?v=4
   email: kws981924@gmail.com
   twitter: #
   links:

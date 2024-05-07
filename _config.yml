@@ -1,4 +1,4 @@
-title: Your awesome title
+title: c0w5un's blog
 author:
   name: c0w5un
   email: kws981924@gmail.com
@@ -6,12 +6,10 @@ author:
 # The `>` after `description:` means to ignore line-breaks until next key.
 # If you want to omit the line-break after the end of text, use `>-` instead.
 description: >
-  Write an awesome description for your new site here. You can edit this line
-  in _config.yml. It will appear in your document head meta (for Google search
-  results) and in your feed.xml site description.
-
+  I share what I've experienced (research, CTF, etc.). 
+  Feel free to let me know if there's anything wrong! 
+  Thanks :)
 # Build settings
-
 # If you clone the Minima repo and build locally, use this setting.
 theme: minima
 

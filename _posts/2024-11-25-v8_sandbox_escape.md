@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "V8 Heap Sandbox: A Simple Guide with an Escape Example - 1"
-categories: v8, heap_sandbox
+title: "V8 Heap Sandbox Escape with Regexp - 1"
+categories: v8, sandbox, regexp, exploit, 1d, chrome
 author:
   - c0w5un
 ---

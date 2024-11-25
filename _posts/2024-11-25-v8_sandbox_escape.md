@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "V8 Heap Sandbox Escape with Regexp - 1"
-categories: v8,sandbox,regexp,exploit,1d,chrome
+categories: v8
 author:
   - c0w5un
 ---

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "V8 Heap Sandbox Escape with Regexp - 1"
-categories: v8, sandbox, regexp, exploit, 1d, chrome
+categories: v8,sandbox,regexp,exploit,1d,chrome
 author:
   - c0w5un
 ---
@@ -22,7 +22,7 @@ author:
 
 아래의 그림은 [참조 [2]](https://docs.google.com/document/d/1FM4fQmIhEqPG8uGp5o9A-mnPB5BOeScZYpkHjo0KKA8/edit?tab=t.0#heading=h.xzptrog8pyxf)에서 사용된 V8 Sandbox 도식화 입니다. 빨간색 부분 및 실선이 오프셋, 초록색 부분 및 점선이 인덱스에 해당합니다.
 
-![V8 sandbox 도식화](../_images/v8_sandbox_escape/2024-11-21_23-59.png)
+![V8 sandbox 도식화](/_images/v8_sandbox_escape/2024-11-21_23-59.png)
 
 V8 sandbox 도식화
 

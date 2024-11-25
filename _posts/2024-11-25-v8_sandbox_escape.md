@@ -22,7 +22,7 @@ author:
 
 아래의 그림은 [참조 [2]](https://docs.google.com/document/d/1FM4fQmIhEqPG8uGp5o9A-mnPB5BOeScZYpkHjo0KKA8/edit?tab=t.0#heading=h.xzptrog8pyxf)에서 사용된 V8 Sandbox 도식화 입니다. 빨간색 부분 및 실선이 오프셋, 초록색 부분 및 점선이 인덱스에 해당합니다.
 
-![V8 sandbox 도식화](/_images/v8_sandbox_escape/2024-11-21_23-59.png)
+![V8 sandbox 도식화](/assets/_images/v8_sandbox_escape/2024-11-21_23-59.png)
 
 V8 sandbox 도식화
 
@@ -136,7 +136,7 @@ TaggedField<T, kFieldOffset, CompressionScheme>::load(Tagged<HeapObject> host,
 
 결론적으로 V8 Sandbox라 함은 V8 Sandbox 내에서 원시 포인터를 전부 인덱스와 오프셋 형태로 변환함으로써 공격자가 샌드박스 내의 읽기 쓰기 프리미티브를 획득하였어도 포인터 정보 획득 및 흐름 제어까지 도달하지 못하게 막는 보호기법이라고 이해하면 되겠습니다. 이로써 공격자의 Exploit 단계에 한 단계가 추가되었다고 볼 수 있습니다. V8 버그로 메모리를 오염시킨뒤에 V8 Sandbox를 탈출해야 온전한 AAR/W를 획득할 수 있습니다. 취약점 갯수의 관점으로서는 Chrome 브라우저 랜더러 프로세스에서 쉘코드를 실행하기 위해 취약점이 두 개가 필요하게 됩니다. 변경된 익스플로잇 흐름도에 대해서는 다음과 같습니다. ([참조 [14]](https://saelo.github.io/presentations/offensivecon_24_the_v8_heap_sandbox.pdf))
 
-![image.png](/_images/v8_sandbox_escape/Exploit_flow.png)
+![image.png](/assets/_images/v8_sandbox_escape/Exploit_flow.png)
 
 # 3. Escape with Regexp
 
@@ -146,7 +146,7 @@ TaggedField<T, kFieldOffset, CompressionScheme>::load(Tagged<HeapObject> host,
 
 정규표현식(RegExp)는 오토마타와 바이트코드라고 소개되어 있습니다. 예를 들어 `/(a*)*b/` 와 같은 정규표현식을 아래와 같은 오토마톤으로 표현할 수 있습니다.
 
-![image.png](/_images/v8_sandbox_escape/regexp.png)
+![image.png](/assets/_images/v8_sandbox_escape/regexp.png)
 
 위의 오토마톤의 동작은 `FORK`, `CONSUME` , `JMP`, `ACCEPT` 으로 총 4개의 동작을 갖고 있습니다. 예시에서 살펴본 `/(a*)*b/` 를 표현한 오토마톤을 바이트코드 형태로 간략하게 표현하면 아래와 같습니다. V8에서는 각 바이트코드 별로 필요한 인자와 수행 동작을 지정하여 일종의 가상머신 형태로 이를 구현하였습니다.
 
@@ -485,7 +485,7 @@ bool JSRegExp::MarkedForTierUp() {
 
 최종적으로 코드 [i]에서 바이트 코드 배열에 값을 쓰고, `regex.exec(s)` 함수로 `RawMatch` 함수를 트리거하면 다음과 같이 `pc` 레지스터가 `0x4141414141414141`로 변경되는 것을 확인할 수 있습니다.
 
-```cpp
+```
 ────────────────────────────────────────────────────────────────────────────────────────────────────── stack ────
 0x00007ffc9ce04c18│+0x0000: 0x4141414141414141   ← $rsp
 0x00007ffc9ce04c20│+0x0008: 0x0000000000000002
@@ -505,7 +505,7 @@ bool JSRegExp::MarkedForTierUp() {
 [#0] Id 1, Name: "d8", stopped 0x5c409cf66582 in v8::internal::(anonymous namespace)::RawMatch<unsigned char> (), reason: SIGSEGV
 ```
 
-```cpp
+```
 d8> % DebugPrint(regex);
 DebugPrint: 0x2b7600144dd1: [JSRegExp] in OldSpace
  - map: 0x2b76001881cd <Map[28](HOLEY_ELEMENTS)> [FastProperties]

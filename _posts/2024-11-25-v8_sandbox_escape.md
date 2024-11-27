@@ -350,7 +350,7 @@ set_reg(idx++,0x41414141);
 success();
 
 for (var i = 0; i < arr.length; i++) {
-    writeHeap4(bytecode + 0x7 + 4 * i, arr[i]);
+    writeHeap4(bytecode + 0x7 + 4 * i, arr[i]); // --- [i]
 }
 
 regex.exec(s);
@@ -392,7 +392,7 @@ IrregexpInterpreter::Result RawMatch(
 // ...
     BYTECODE(SET_REGISTER) {
       ADVANCE(SET_REGISTER);
-      registers[LoadPacked24Unsigned(insn)] = Load32Aligned(pc + 4);
+      registers[LoadPacked24Unsigned(insn)] = Load32Aligned(pc + 4); // --- [j]
       DISPATCH();
     }
 // ...
@@ -406,7 +406,7 @@ IrregexpInterpreter::Result RawMatch(
 }
 ```
 
-`registers[LoadPacked24Unsigned(insn)] = Load32Aligned(pc + 4);` 부분에서 사용되는 부분이 위에서 언급한 부분에 해당합니다. 여기서 문제점은 `InterpreterRegisters` 클래스에서 선언된 `operator[]` 함수에서 내부 맴버 변수인 `registers_` 를 참조할때 아무런 검증이 없다는 것입니다. 따라서 코드 [h]에서 `RawMatch` 함수 내부에 지역변수로 선언된 `registers` 객체의 `registers_` 맴버 변수를 이용하여 OOB가 발생하게 됩니다.
+위의 코드 [j] 부분에서 사용되는 부분이 위에서 언급한 내용에 해당합니다. 여기서 문제점은 `InterpreterRegisters` 클래스에서 선언된 `operator[]` 함수에서 내부 맴버 변수인 `registers_` 를 참조할때 아무런 검증이 없다는 것입니다. 따라서 코드 [h]에서 만들어낸 바이트코드로 인하여 `RawMatch` 함수 내부에 지역변수로 선언된 `registers` 객체의 `registers_` 맴버 변수를 이용하여 OOB가 발생하게 됩니다.
 
 ```cpp
 class InterpreterRegisters {
@@ -599,7 +599,7 @@ index 31fe503..13cf076 100644
  };
 ```
 
-덧붙여서, https://saelo.github.io/presentations/offensivecon_24_the_v8_heap_sandbox.pdf 의 내용에 따르면 신뢰할 수 없는 인덱스에 대한 참조, 불변성이 깨질 수 있는 곳에 `SBXCHECK` 함수를 사용하여 V8 Heap Sandbox를 유지한다고 나와있습니다.
+덧붙여서, [참조 [14]](https://saelo.github.io/presentations/offensivecon_24_the_v8_heap_sandbox.pdf) 의 내용에 따르면 신뢰할 수 없는 인덱스에 대한 참조, 불변성이 깨질 수 있는 곳에 `SBXCHECK` 함수를 사용하여 V8 Heap Sandbox를 유지한다고 나와있습니다.
 
 추가적으로 해당 이슈에서 나온 패치는 아니지만, 이후 패치에서 Regexp의 regexp_data 주소 값이 Trust Pointer Table로 옮겨지면서 샌드박스 내에서 바이트 코드에 접근할 수 없게 패치 되었습니다.
 
@@ -732,7 +732,7 @@ index 180fd84..3dd0a05 100644
 
 글을 마무리 하며, [개인 블로그](https://kangwoosun.github.io/)에는 영어 버전도 게시할 예정이니 필요하신 분은 참고해주세요 :)
 
-# **6. Reference**
+# 6. Reference
 
 - [The V8 Sandbox - Readme](https://chromium.googlesource.com/v8/v8.git/+/refs/heads/main/src/sandbox/README.md) - [1]
 - [V8 Sandbox - High-Level Design Doc](https://docs.google.com/document/d/1FM4fQmIhEqPG8uGp5o9A-mnPB5BOeScZYpkHjo0KKA8/edit?tab=t.0#heading=h.xzptrog8pyxf) - [2]
@@ -742,10 +742,14 @@ index 180fd84..3dd0a05 100644
 - [V8 Sandbox - Code Pointer Sandboxing](https://docs.google.com/document/d/1CPs5PutbnmI-c5g7e_Td9CNGh5BvpLleKCqUnqmD82k/edit?tab=t.0#heading=h.xzptrog8pyxf) - [6]
 - [V8 Sandbox - Trusted Space](https://docs.google.com/document/d/1IrvzL4uX_Zv0k2Iakdp_q_z33bj-qlYF5IesGpXW0fM/edit?tab=t.0#heading=h.xzptrog8pyxf) - [7]
 - [V8 Sandbox - Hardware Support](https://docs.google.com/document/d/12MsaG6BYRB-jQWNkZiuM3bY8X2B2cAsCMLLdgErvK4c/edit?tab=t.0#heading=h.xzptrog8pyxf) - [8]
-- https://v8.dev/blog/sandbox - [9]
-- https://v8.dev/blog/pointer-compression - [10]
-- https://v8.dev/blog/non-backtracking-regexp - [11]
-- https://issues.chromium.org/issues/330404819 - [12]
-- https://github.com/rycbar77/V8-Sandbox-Escape-via-Regexp - [13]
-- https://saelo.github.io/presentations/offensivecon_24_the_v8_heap_sandbox.pdf - [14]
-- https://chromium.googlesource.com/chromium/src/+/HEAD/docs/design/sandbox.md - [15]
+- [https://v8.dev/blog/sandbox](https://v8.dev/blog/sandbox) - [9]
+- [https://v8.dev/blog/pointer-compression](https://v8.dev/blog/pointer-compression) - [10]
+- [https://v8.dev/blog/non-backtracking-regexp](https://v8.dev/blog/non-backtracking-regexp) - [11]
+- [https://issues.chromium.org/issues/330404819](https://issues.chromium.org/issues/330404819) - [12]
+- [https://github.com/rycbar77/V8-Sandbox-Escape-via-Regexp](https://github.com/rycbar77/V8-Sandbox-Escape-via-Regexp) - [13]
+- [https://saelo.github.io/presentations/offensivecon_24_the_v8_heap_sandbox.pdf](https://saelo.github.io/presentations/offensivecon_24_the_v8_heap_sandbox.pdf) - [14]
+- [https://chromium.googlesource.com/chromium/src/+/HEAD/docs/design/sandbox.md](https://chromium.googlesource.com/chromium/src/+/HEAD/docs/design/sandbox.md) - [15]
+
+
+
++) UPDATE '24.11.27.(수) : 링크 및 내용 수정

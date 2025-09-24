@@ -434,7 +434,7 @@ RCE 전체 코드를 살펴보려면 [여기](https://github.com/Kangwoosun/Expl
 
 # 6. Reference
 
-- https://github.blog/security/vulnerability-research/getting-rce-in-chrome-with-incomplete-object-initialization-in-the-maglev-compiler/
-- https://issues.chromium.org/issues/330404819
-- https://github.com/rycbar77/V8-Sandbox-Escape-via-Regexp
-- https://jhalon.github.io/chrome-browser-exploitation-1/
+- [https://github.blog/security/vulnerability-research/getting-rce-in-chrome-with-incomplete-object-initialization-in-the-maglev-compiler/](https://github.blog/security/vulnerability-research/getting-rce-in-chrome-with-incomplete-object-initialization-in-the-maglev-compiler/)
+- [https://issues.chromium.org/issues/330404819](https://issues.chromium.org/issues/330404819)
+- [https://github.com/rycbar77/V8-Sandbox-Escape-via-Regexp](https://github.com/rycbar77/V8-Sandbox-Escape-via-Regexp)
+- [https://jhalon.github.io/chrome-browser-exploitation-1/](https://jhalon.github.io/chrome-browser-exploitation-1/)
